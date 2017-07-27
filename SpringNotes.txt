@@ -1,0 +1,317 @@
+Spring framework was introduced by Rod johnson
+
+We use spring because its light weight in nature.
+
+Spring Boot is helpful for developing cloud applications
+Spring Cloud,Spring Data
+
+Advantages of Spring:-
+
+Spring is Modular in nature.what ever we require it will load only that
+will not re invent the wheel
+it will suggest how to use existing ORM like hibernate
+it can be easily integrate any other framework like struts.
+
+Spring MVC
+
+Spring is used to handle different transactions.(Programattic transaction(Programmer needs to explicitly declare),Declarative transaction(With the help of aop))
+
+EJB is used for executing business logic
+
+Any enterprise application can be executed
+
+Spring FrameWork Architecture.
+-----------------------------
+Light Weight
+Loosely Coupled
+Its a layered architecture
+	Data Access Layer (JDBC,ORM,OXM,TRANSACTIONS),Web(MVC,PROTLET,SERVLET)
+	AOP(AOP,ASPECTS) -->Logging ,Auditing , Security ,Transaction
+	IOC(CORE,BEAN,CONTEXT,EXPRESSION LANGUAGE)
+	Testing layer
+
+Spring container will populate the object. this is done by we write in beans.
+Context is env variable to communicate with spring container
+
+
+container--->context-->beans are populated
+
+Expression Language -->
+
+
+In TDD 1st we need to write test cases and then write the functionalities
+
+
+Maven
+-----
+
+make --> ant (build.xml)--> maven (pom.xml fiel)--> gradle(gradle is flexible script written in groovy language)(build.gradle)
+
+complie and deploy
+project layout --> it defines project layout(helps in providing entire structure)
+Resolving Dependencies (Imports jars i.e helps in managing required jars from the repos)
+Multiple Repositories (corporate repo, and general repos)
+Plugin management (we can give the plugin configuration)
+
+Inversion of Control
+--------------------
+instead of creation of objects using new keyword we give in bean and make it prepopulate
+
+
+Dependency Injection
+--------------------
+the way how we provide dependent object is called dependency injection
+
+e.g Providing datasource object
+
+
+spring container reads the meta data either by xml/annotations .spring container reads the pojo objects from the pojo skeleton it understands what are all the
+dependent object required and creates the application
+
+https://github.com/Training2017/Spring_Kafka
+
+
+object which is being populate by spring container is called bean
+
+
+whenever we write property tag it will call setter injection method
+whenever we write construcstor-arg tag it will call constructor injection method
+
+context
+=======
+1)Application Context
+--------------------
+	1)ClassPathXMLApplicationCOntext (if available inside class path)
+	2)FileSystemApllicationContext	(if available in some file)
+	3)WebAplicationContext (if availabe in web)
+
+Abstract application context which extends Applciation Context
+
+
+2)BeanFactory
+----------
+
+when ever we need backward compatiblity support we use beanfactory
+
+
+Scope of spring bean scope:-
+By default its Singleton(Only one object will be created)
+
+to have more object declare scope as prototype
+
+for webapplication these scopes are available
+---------------------------------------------
+session
+request
+global session(to achieve intersession we use global session)
+
+
+
+Autowiring:
+----------
+In both seter/constructor we need to specify dependent object explicitly hence autowiring
+
+it does auto detection of bean 
+
+Autowiring Types:
+----------------.
+for both byName and byType setter injection is prefered
+byName (bean id is given dependent object name. it will take bean name reference)
+byType (it will take class reference)
+
+for constructor based autowiring constructor bean values are preferred
+constructor (1st byName and next byType) internally it uses auto-detect mode to deduct 1st byName and next byType
+
+
+Bean LifeCycles
+---------------
+it can be managed with the help of init and destroy method
+
+
+BeanPost processor Interfaces
+
+
+Collections
+-----------
+
+autowiring problem
+cannot autowire premitive datatypes
+ambiguious
+autowiring can overide xml config
+
+
+Day2
+====
+1)xml config
+2)Annotations carries meta information
+3)Java Config (get rid of xml config)
+
+modern frameworks eliminitating xml config
+to avoid multiple problems we eliminate xml config problems like
+1)space problem
+2)have to maintain dtd and xsd
+and many more
+
+autowire == deduct the dependency and insert the dependency
+5 types of autowiring 
+no
+byName
+byType
+constructor
+auto detect
+
+
+1st by type and if found ambigious then it will go byName
+
+ambigious error can be resolved by qualifier annotation
+qualifier can only be used on variables and methods not on constructors
+
+
+Scopes
+------
+Singleton (Only one object is created for all request)
+Prototype (for every request new object is created)
+
+
+setterInjection
+constructorInjection
+
+
+methodInjection it is prefered for the following reasons
+
+whenever we inject prototype bean into singleton it will behave as singleton which is violation of scope
+
+1st approach)hence to over come this we have  method injection which has tag called lookup-method to go with xml
+
+2nd approach)inside in singletonbean we need to implement applicationcontextaware to go with the java only
+
+Traditional Core Java JDBC Connection
+-------------------------------------
+Connection Management
+Exception Handling (sql exception,file not found)
+
+to understand the streotype annotations we need to mention @componentscan(rootpackage)
+
+
+Day 3
+=====
+Spring MVC
+----------
+
+Once the request object has been generated it goes to dispacher Servlet and it goes to controller which consists of multiple
+services request object is going to pick up appropriate service to find the appropriate service we annotate it with @requestmapping
+after the executing of particular service it returns a model and view object to dispatcher servlet and to resolve the confusion of 
+model and view it sends to view template with the help of view resolver we are able to identify view object and send it back to dispatcher
+servlet again and that response it going back to client
+
+
+spring mvc only has one dispatcher servlet which exits in web.xml it also acts as front controller design pattern (filter/reformat)request
+
+instead of web.xml we have web initializer in spring4
+
+class which is annotated with @controller
+
+spring has many view resolver
+internal resource view resolver
+url based view resolvers
+xml view resolver
+
+load on startup =once the application startup how many instance loaded initially
+
+Spring Validations
+------------------
+Client side valiedations
+Ajax Validations
+Container Validation
+
+container Validations
+--------------------
+1)jars
+2)Enable Web MVC
+3)Write supporting config on POJO
+4)@Valid in controller
+5)<form:errors>
+
+
+
+Apache Kafka
+------------
+Messaging is used for Asynchronous Communication(server will take some time for processing and it will give result)
+
+Synchron communication can be acheived by rest api
+
+
+data transmission as a message
+
+Distributed means multiple servers in each slave
+
+apache kafka is distributed messaging system
+load balancing will happen depending on load
+
+Kafka works as pubsub model only i.e produces and consumer model
+
+Diifferent ways for message transmission
+----------------------------------------
+Data Replication
+	(RDBMS)Huge volume of data cannot be performed
+	Performance is low
+
+log shipping
+
+ETL (Extract tranfer load)
+	extract for source during transfer find the destination and load to destination
+	Cost is pretty high
+
+Messaging (Messaging can be transfered to ways)
+	Queue (Point to Point communication)
+	Topic (Publisher and Subscriber) i.e one sender multiple receivers
+
+	scalibility is a problem
+	Impact performance when we send huge volume of data
+	message broker where application drops messages to broker and broker circulate messages to consumers
+
+
+Custom Middle ware
+	Lot of challenges while maintainence
+	like scaling
+	cannot be reusable in other projects
+	licencing issue
+
+Why kafka
+ 	because high volume of data can be processes
+	scalibility is easy
+	if required high volume of throughput
+
+kafka is opensource messaging system it was produced by linkedin
+Please read ppt whic she is showing
+
+Kakfa cluster can be managed by zookepers
+zookepers manages load balanced work among brokers
+any cluster falied zookeeprs will automatically route to next subsequent broker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
